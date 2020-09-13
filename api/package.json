@@ -2,6 +2,7 @@
   "name": "todo-app",
   "version": "1.0.0",
   "author": "Nisa Khusong <n.khusong@gmail.com>",
+  "description": "Backend side for the to-do application",
   "license": "MIT",
   "main": "server.js",
   "type": "module",
