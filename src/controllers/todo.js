@@ -2,7 +2,6 @@ import db from '../models/index.js'
 const Todo = db.todo
 
 const createTodo = (req, res) => {
-  console.log(req.body)
   // validation
   if (!req.body.name) {
     res.status(400).json({ message: 'name is required.' })
