@@ -90,6 +90,7 @@ class App extends React.Component {
                       todoItems.map((item) => {
                         return(
                           <TodoItem
+                            key={item.id}
                             item={item}
                             onUpdateItem={this.onUpdateItem}
                             onDelete={this.onDeleteItem}
