@@ -1,14 +1,21 @@
 import db from '../models/index.js'
 const Todo = db.todo
 
+const listTodo = (req, res) => {
+  Todo.find()
+    .then((result) => {
+      res.json(result)
+    }).catch((err) => {
+      res.status(500).json({ message: 'An error occured.' })
+    })
+}
+
 const createTodo = (req, res) => {
   // validation
-  if (!req.body.name) {
-    res.status(400).json({ message: 'name is required.' })
-    return
+  if (!req.body.name || req.body.name === '') {
+    return res.status(400).json({ message: 'name is required.' })
   }
 
-  // create todo in database
   const todo = new Todo({
     name: req.body.name,
   })
@@ -21,8 +28,15 @@ const createTodo = (req, res) => {
     })
 }
 
-const listTodo = (req, res) => {
-  Todo.find()
+const updateTodo = (req, res) => {
+  // validation
+  if (!req.body.name || req.body.name === '') {
+    return res.status(400).json({ message: 'name is required.' })
+  }
+
+  const id = req.params.id
+
+  Todo.findByIdAndUpdate(id, req.body, { new: true })
     .then((result) => {
       res.json(result)
     }).catch((err) => {
@@ -31,6 +45,7 @@ const listTodo = (req, res) => {
 }
 
 export default {
+  listTodo,
   createTodo,
-  listTodo
+  updateTodo,
 }

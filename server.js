@@ -18,8 +18,9 @@ db.mongoose.connect(db.url, { useNewUrlParser: true, useUnifiedTopology: true })
   })
 
 const router = express.Router()
-router.post('/', todo.createTodo)
 router.get('/', todo.listTodo)
+router.post('/', todo.createTodo)
+router.put('/:id', todo.updateTodo)
 app.use('/todos', router)
 
 // default error handling
