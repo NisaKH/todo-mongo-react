@@ -38,7 +38,25 @@ const updateTodo = (req, res) => {
 
   Todo.findByIdAndUpdate(id, req.body, { new: true })
     .then((result) => {
+      if (!result) {
+        return res.status(404).json({ message: `Todo with id=${id} does not exist.` })
+      }
       res.json(result)
+    }).catch((err) => {
+      console.log(err)
+      res.status(500).json({ message: 'An error occured.' })
+    })
+}
+
+const deleteTodo = (req, res) => {
+  const id = req.params.id
+
+  Todo.findByIdAndRemove(id)
+    .then((result) => {
+      if (!result) {
+        return res.status(404).json({ message: `Todo with id=${id} does not exist.` })
+      }
+      res.json({ message: `Todo with id=${id} was deleted successfully.` })
     }).catch((err) => {
       res.status(500).json({ message: 'An error occured.' })
     })
@@ -48,4 +66,5 @@ export default {
   listTodo,
   createTodo,
   updateTodo,
+  deleteTodo,
 }
