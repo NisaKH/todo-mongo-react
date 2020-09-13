@@ -36,7 +36,7 @@ const updateTodo = (req, res) => {
 
   const id = req.params.id
 
-  Todo.findByIdAndUpdate(id, req.body, { new: true })
+  Todo.findByIdAndUpdate(id, req.body, { new: true, useFindAndModify: false })
     .then((result) => {
       if (!result) {
         return res.status(404).json({ message: `Todo with id=${id} does not exist.` })
@@ -50,7 +50,7 @@ const updateTodo = (req, res) => {
 const deleteTodo = (req, res) => {
   const id = req.params.id
 
-  Todo.findByIdAndRemove(id)
+  Todo.findByIdAndRemove(id, { useFindAndModify: false })
     .then((result) => {
       if (!result) {
         return res.status(404).json({ message: `Todo with id=${id} does not exist.` })

@@ -1,7 +1,6 @@
 export default (mongoose) => {
   let schema = mongoose.Schema(
     {
-      id: { type: String, default: mongoose.Types.ObjectId },
       name: String,
       isDone: { type: Boolean, default: false },
     },
@@ -9,6 +8,7 @@ export default (mongoose) => {
       timestamps: true,
       toJSON: {
         transform: (doc, ret) => {
+          ret.id = ret._id
           delete ret._id
           delete ret.__v
         }
