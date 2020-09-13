@@ -4,19 +4,20 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import { number, string, bool, func } from 'prop-types'
+import { object, func } from 'prop-types'
 
 
 const TodoItem = ({
-  id,
-  name,
-  isDone,
-  onToggle,
+  item,
   onUpdateItem,
   onDelete,
 }) => {
   const onChange = (e) => {
-    onUpdateItem(id, e.target.value)
+    onUpdateItem(item.id, {...item, name: e.target.value})
+  }
+
+  const onToggle = () => {
+    onUpdateItem(item.id, {...item, isDone: !item.isDone})
   }
 
   return (
@@ -24,18 +25,18 @@ const TodoItem = ({
       <Row>
         <Col xs="auto">
           <Form.Check
-            checked={isDone}
-            onChange={onToggle(id)}
+            checked={item.isDone}
+            onChange={onToggle}
           />
         </Col>
         <Col>
           <Form.Control
-            value={name}
+            value={item.name}
             onChange={onChange}
           />
         </Col>
         <Col xs="auto">
-          <Button variant="outline-danger" onClick={() => onDelete(id)}>Delete</Button>
+          <Button variant="outline-danger" onClick={() => onDelete(item.id)}>Delete</Button>
         </Col>
       </Row>
     </ListGroup.Item>
@@ -43,10 +44,7 @@ const TodoItem = ({
 }
 
 TodoItem.propTypes = {
-  id: number,
-  name: string,
-  isDone: bool,
-  onToggle: func,
+  item: object,
   onUpdateItem: func,
   onDelete: func,
 }

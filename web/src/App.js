@@ -39,6 +39,18 @@ class App extends React.Component {
       })
   }
 
+  onUpdateItem = (id, item) => {
+    console.log(id, item)
+    todoService.updateTodoById(id, {
+      id: item.id,
+      name: item.name,
+      isDone: item.isDone,
+    })
+      .then(() => {
+        this.fetchItems()
+      })
+  }
+
   onDeleteItem = (id) => {
     todoService.deleteTodoById(id)
       .then(() => {
@@ -57,12 +69,12 @@ class App extends React.Component {
       <div className="App">
         <Container>
           <Row className="justify-content-center">
-            <Col xs={12} md={10} lg={6}>
+            <Col xs={12} md={10} lg={8}>
               <h4 className="todo-header">To-Do</h4>
             </Col>
           </Row>
           <Row className="justify-content-center">
-            <Col xs={12} md={10} lg={6}>
+            <Col xs={12} md={10} lg={8}>
               <TodoForm
                 placeHolder="Enter new to-do"
                 onSubmit={this.onCreateItem}
@@ -70,7 +82,7 @@ class App extends React.Component {
             </Col>
           </Row>
           <Row className="justify-content-center">
-            <Col xs={12} md={10} lg={6}>
+            <Col xs={12} md={10} lg={8}>
               {
                 todoItems.length !== 0 && (
                   <ListGroup>
@@ -78,11 +90,8 @@ class App extends React.Component {
                       todoItems.map((item) => {
                         return(
                           <TodoItem
-                            id={item.id}
-                            name={item.name}
-                            isDone={item.isDone}
-                            onToggle={() => {}}
-                            onUpdateItem={() => {}}
+                            item={item}
+                            onUpdateItem={this.onUpdateItem}
                             onDelete={this.onDeleteItem}
                           />
                         )

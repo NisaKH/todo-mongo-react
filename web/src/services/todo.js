@@ -7,7 +7,6 @@ import axios from 'axios'
 const listTodo = async () => {
   return await axios.get('http://localhost:3333/todos')
     .then((response) => {
-      console.log('response', response)
       return response.data
     })
     .catch((error) => {
@@ -18,7 +17,6 @@ const listTodo = async () => {
 const createTodo = async (data) => {
   return await axios.post('http://localhost:3333/todos', data)
     .then((response) => {
-      console.log('response', response)
       return response.data
     })
     .catch((error) => {
@@ -26,14 +24,19 @@ const createTodo = async (data) => {
     })
 }
 
-const updateTodoById = (id, data) => {
-
+const updateTodoById = async (id, data) => {
+  return await axios.put(`http://localhost:3333/todos/${id}`, data)
+    .then((response) => {
+      return response.data
+    })
+    .catch((error) => {
+      // todo: handle error
+    })
 }
 
 const deleteTodoById = async (id) => {
   return await axios.delete(`http://localhost:3333/todos/${id}`)
     .then((response) => {
-      console.log('response', response)
       return response.data
     })
     .catch((error) => {
