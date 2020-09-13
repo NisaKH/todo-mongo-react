@@ -96,7 +96,6 @@ class App extends React.Component {
                             onDelete={this.onDeleteItem}
                           />
                         )
-                        // return (<ListGroup.Item>{item.name}</ListGroup.Item>)
                       })
                     }
                   </ListGroup>
