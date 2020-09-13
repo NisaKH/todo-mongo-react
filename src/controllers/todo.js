@@ -13,7 +13,16 @@ const createTodo = (req, res) => {
     name: req.body.name,
   })
 
-  Todo.save(todo)
+  todo.save(todo)
+    .then((result) => {
+      res.json(result)
+    }).catch((err) => {
+      res.status(500).json({ message: 'An error occured.' })
+    })
+}
+
+const listTodo = (req, res) => {
+  Todo.find()
     .then((result) => {
       res.json(result)
     }).catch((err) => {
@@ -22,5 +31,6 @@ const createTodo = (req, res) => {
 }
 
 export default {
-  createTodo
+  createTodo,
+  listTodo
 }
