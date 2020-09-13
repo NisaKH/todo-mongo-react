@@ -3,8 +3,8 @@ import bodyParser from 'body-parser'
 import methodOverride from 'method-override'
 import cors from 'cors'
 
+import routes from './src/routes/index.js'
 import db from './src/models/index.js'
-import todo from './src/controllers/todo.js'
 
 const app = express()
 app.use(cors())
@@ -20,12 +20,8 @@ db.mongoose.connect(db.url, { useNewUrlParser: true, useUnifiedTopology: true })
     process.exit()
   })
 
-const router = express.Router()
-router.get('/', todo.listTodo)
-router.post('/', todo.createTodo)
-router.put('/:id', todo.updateTodo)
-router.delete('/:id', todo.deleteTodo)
-app.use('/todos', router)
+// mount all available routes
+app.use('/', routes)
 
 // default error handling
 app.use(methodOverride())
