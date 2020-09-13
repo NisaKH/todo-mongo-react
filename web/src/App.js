@@ -1,22 +1,35 @@
 import React from 'react';
+
+// services
+import todoService from './services/todo.js'
+
+// components
 import Form from 'react-bootstrap/Form'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Button from 'react-bootstrap/Button'
+
+// css
 import './App.css';
 
 class App extends React.Component {
   state = {
-    items: [
-      { name: 'test1', status: false },
-      { name: 'test2', status: true },
-    ],
+    items: [],
   }
 
   getItems = (isDone) => {
-    return this.state.items.filter(item => (isDone && item.status === isDone) || true)
+    return this.state.items.filter(item => (isDone && item.isDone === isDone) || true)
+  }
+
+  componentDidMount() {
+    todoService.listTodo()
+      .then((response) => {
+        this.setState(state => ({
+          items: Object.values(response)
+        }))
+      })
   }
 
   render() {
