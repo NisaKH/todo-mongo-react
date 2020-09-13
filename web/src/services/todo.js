@@ -30,8 +30,15 @@ const updateTodoById = (id, data) => {
 
 }
 
-const deleteTodoById = (id, data) => {
-
+const deleteTodoById = async (id) => {
+  return await axios.delete(`http://localhost:3333/todos/${id}`)
+    .then((response) => {
+      console.log('response', response)
+      return response.data
+    })
+    .catch((error) => {
+      // todo: handle error
+    })
 }
 
 export default {

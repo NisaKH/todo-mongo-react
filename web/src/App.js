@@ -8,8 +8,8 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup'
-import Button from 'react-bootstrap/Button'
 import TodoForm from './components/TodoForm'
+import TodoItem from './components/TodoItem'
 
 // css
 import './App.css';
@@ -34,6 +34,13 @@ class App extends React.Component {
 
   onCreateItem = (item) => {
     todoService.createTodo({ name: item })
+      .then(() => {
+        this.fetchItems()
+      })
+  }
+
+  onDeleteItem = (id) => {
+    todoService.deleteTodoById(id)
       .then(() => {
         this.fetchItems()
       })
@@ -69,7 +76,17 @@ class App extends React.Component {
                   <ListGroup>
                     {
                       todoItems.map((item) => {
-                        return (<ListGroup.Item>{item.name}</ListGroup.Item>)
+                        return(
+                          <TodoItem
+                            id={item.id}
+                            name={item.name}
+                            isDone={item.isDone}
+                            onToggle={() => {}}
+                            onUpdateItem={() => {}}
+                            onDelete={this.onDeleteItem}
+                          />
+                        )
+                        // return (<ListGroup.Item>{item.name}</ListGroup.Item>)
                       })
                     }
                   </ListGroup>
