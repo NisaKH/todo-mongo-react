@@ -1,10 +1,15 @@
 {
   "name": "todo-app",
   "version": "1.0.0",
-  "main": "index.js",
   "author": "Nisa Khusong <n.khusong@gmail.com>",
   "license": "MIT",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4"
   }
 }
