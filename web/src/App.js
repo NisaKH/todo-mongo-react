@@ -4,12 +4,12 @@ import React from 'react';
 import todoService from './services/todo.js'
 
 // components
-import Form from 'react-bootstrap/Form'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Button from 'react-bootstrap/Button'
+import TodoForm from './components/TodoForm'
 
 // css
 import './App.css';
@@ -19,17 +19,28 @@ class App extends React.Component {
     items: [],
   }
 
-  getItems = (isDone) => {
-    return this.state.items.filter(item => (isDone && item.isDone === isDone) || true)
-  }
-
-  componentDidMount() {
+  fetchItems = () => {
     todoService.listTodo()
       .then((response) => {
         this.setState(state => ({
           items: Object.values(response)
         }))
       })
+  }
+
+  getItems = (isDone) => {
+    return this.state.items.filter(item => (isDone && item.isDone === isDone) || true)
+  }
+
+  onCreateItem = (item) => {
+    todoService.createTodo({ name: item })
+      .then(() => {
+        this.fetchItems()
+      })
+  }
+
+  componentDidMount() {
+    this.fetchItems()
   }
 
   render() {
@@ -45,16 +56,10 @@ class App extends React.Component {
           </Row>
           <Row className="justify-content-center">
             <Col xs={12} md={10} lg={6}>
-              <Form className="todo-form">
-                <Form.Row>
-                  <Col xs={9}>
-                    <Form.Control placeholder="Enter new to-do" />
-                  </Col>
-                  <Col xs={3}>
-                    <Button block>Add</Button>
-                  </Col>
-                </Form.Row>
-              </Form>
+              <TodoForm
+                placeHolder="Enter new to-do"
+                onSubmit={this.onCreateItem}
+              />
             </Col>
           </Row>
           <Row className="justify-content-center">

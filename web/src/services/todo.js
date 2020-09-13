@@ -15,8 +15,15 @@ const listTodo = async () => {
     })
 }
 
-const createTodo = (data) => {
-
+const createTodo = async (data) => {
+  return await axios.post('http://localhost:3333/todos', data)
+    .then((response) => {
+      console.log('response', response)
+      return response.data
+    })
+    .catch((error) => {
+      // todo: handle error
+    })
 }
 
 const updateTodoById = (id, data) => {
