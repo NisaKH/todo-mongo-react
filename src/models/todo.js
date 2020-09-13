@@ -1,5 +1,5 @@
 export default (mongoose) => {
-  let schema = mongoose.schema(
+  let schema = mongoose.Schema(
     {
       name: String,
       status: String,
