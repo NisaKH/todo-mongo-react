@@ -13,7 +13,7 @@ const createTodo = (req, res) => {
     name: req.body.name,
   })
 
-  todo.save(todo)
+  Todo.save(todo)
     .then((result) => {
       res.json(result)
     }).catch((err) => {

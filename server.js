@@ -1,5 +1,6 @@
 import express from 'express'
 import bodyParser from 'body-parser'
+import methodOverride from 'method-override'
 import db from './src/models/index.js'
 import todo from './src/controllers/todo.js'
 
@@ -7,8 +8,7 @@ const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-const router = express.Router()
-
+// connect to database
 db.mongoose.connect(db.url, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log("Connection established..")
@@ -17,13 +17,22 @@ db.mongoose.connect(db.url, { useNewUrlParser: true, useUnifiedTopology: true })
     process.exit()
   })
 
+const router = express.Router()
 router.get('/', (req, res) => {
   res.send('hello world!')
 })
 
 router.post('/', todo.createTodo)
-
 app.use('/todos', router)
+
+// default error handling
+app.use(methodOverride())
+app.use((err,req, res, next) => {
+  if (err) {
+    res.status(500).json({ message: 'An error occured.' })
+  }
+})
+
 const server = app.listen(3000, () => {})
 
 export default server
